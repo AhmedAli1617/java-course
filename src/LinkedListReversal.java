@@ -16,21 +16,14 @@ public class LinkedListReversal {
         ListNodeMid prev = null;    // To keep track of the previous node
         ListNodeMid current = head; // The current node that we are processing
 
+        //1,2,3,4,5
         // Iterate through the linked list
         int count=1;
         while (current != null) {
-            System.out.println("Iteration: "+count);
             ListNodeMid next = current.next;  // Temporarily store the next node
-            System.out.println("Next: "+ next.val);
             current.next = prev;           // Reverse the current node's pointer
-            System.out.println("Current.next : "+current!=null?current.next!=null?next.val:null:null);
             prev = current;                // Move prev to current
-            System.out.println("Prev : "+prev.val);
             current = next;                // Move current to next node
-            System.out.println("Current : "+current.val);
-            System.out.println();
-            System.out.println("Linked List condition: " );
-            printList(current);
             count++;
         }
 
@@ -48,11 +41,6 @@ public class LinkedListReversal {
         //3rd iteration next 3, curr.next 1, prev 2, curr 3 -> next 4, curr.next 2, prev 3, curr 4
 
         //   3,4,2
-
-
-
-
-
 
 
         // At the end, prev will be the new head of the reversed list
@@ -77,7 +65,6 @@ public class LinkedListReversal {
         head.next = new ListNodeMid(2);
         head.next.next = new ListNodeMid(3);
         head.next.next.next = new ListNodeMid(4);
-        head.next.next.next.next = new ListNodeMid(5);
 
         LinkedListReversal list = new LinkedListReversal();
         
