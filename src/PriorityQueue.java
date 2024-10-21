@@ -1,98 +1,107 @@
-public class PriorityQueue {
-    /** class Task **/
-    class Task
+class PriorityQueue
     {
-        String job;
-        int priority;
+        private Task[] heap;   //array of objects
+        private int heapSize, capacity;
 
-        /** Constructor **/
-        public Task(String job, int priority)
+
+        public PriorityQueue(int capacity)
         {
-            this.job = job;
-            this.priority = priority;
+            this.capacity = capacity + 1;
+            heap = new Task[this.capacity];
+            heapSize = 0;
         }
-        /** toString() **/
-        public String toString()
+        
+
+        public void clear()
         {
-            return "Job Name : "+ job +"\nPriority : "+ priority;
+            heap = new Task[capacity];
+            heapSize = 0;
         }
-    }
-    private Task[] heap;
-    private int heapSize, capacity;
+        
 
-    /** Constructor **/
-    public PriorityQueue(int capacity)
-    {
-        this.capacity = capacity + 1;
-        heap = new Task[this.capacity];
-        heapSize = 0;
-    }
-    /** function to clear **/
-    public void clear()
-    {
-        heap = new Task[capacity];
-        heapSize = 0;
-    }
-    /** function to check if empty **/
-    public boolean isEmpty()
-    {
-        return heapSize == 0;
-    }
-    /** function to check if full **/
-    public boolean isFull()
-    {
-        return heapSize == capacity - 1;
-    }
-    /** function to get Size **/
-    public int size()
-    {
-        return heapSize;
-    }
-    /** function to insert task **/
-    public void insert(String job, int priority)
-    {
-        Task newJob = new Task(job, priority);
 
-        heap[++heapSize] = newJob;
-        int pos = heapSize;
-        while (pos != 1 && newJob.priority > heap[pos/2].priority)
+        public boolean isEmpty()
         {
-            heap[pos] = heap[pos/2];
-            pos /=2;
+            return heapSize == 0;
         }
-        heap[pos] = newJob;
-    }
-    /** function to remove task **/
-    public Task remove()
-    {
-        int parent, child;
-        Task item, temp;
-        if (isEmpty() )
+        
+
+        public boolean isFull()
         {
-            System.out.println("Heap is empty");
-            return null;
+            return heapSize == capacity - 1;
         }
+        
 
-        item = heap[1];
-        temp = heap[heapSize--];
 
-        parent = 1;
-        child = 2;
-        while (child <= heapSize)
+        public int size()
         {
-            if (child < heapSize && heap[child].priority < heap[child + 1].priority)
-                child++;
-            if (temp.priority >= heap[child].priority)
-                break;
-
-            heap[parent] = heap[child];
-            parent = child;
-            child *= 2;
+            return heapSize;
         }
-        heap[parent] = temp;
+        
 
-        return item;
+
+        public void insert(String job, int priority)
+        {
+            Task newJob = new Task(job, priority);
+
+            heap[++heapSize] = newJob;
+
+            //cleaner is saved on the 0th index
+
+            int pos = heapSize;
+
+            // post =1
+            // pos =2
+            //pos =3
+            while (pos != 1 && newJob.priority > heap[pos/2].priority)
+            {
+                heap[pos] = heap[pos/2];
+                pos /=2;
+            }
+
+            //job='cleaner',priority=2
+            //jon='manager',priority=5
+            //job='clerk',priority=1
+
+            //1st element insertion   cleaner,cleaner
+            //2nd element insertion   cleaner,manager,manager   pos->1
+            //3rd element insertion   cleaner,manager,clerk
+
+
+            heap[pos] = newJob;
+        }
+        
+
+
+        public Task remove()
+        {
+            int parent, child;
+            Task item, temp;
+            if (isEmpty() )
+            {
+                System.out.println("Heap is empty");
+                return null;
+            }
+
+            item = heap[1];
+            temp = heap[heapSize--];
+
+            parent = 1;
+            child = 2;
+            while (child <= heapSize)
+            {
+                if (child < heapSize && heap[child].priority < heap[child + 1].priority)
+                    child++;
+                if (temp.priority >= heap[child].priority)
+                    break;
+
+                heap[parent] = heap[child];
+                parent = child;
+                child *= 2;
+            }
+            heap[parent] = temp;
+
+            return item;
+        }
     }
-
-
-}
+    
